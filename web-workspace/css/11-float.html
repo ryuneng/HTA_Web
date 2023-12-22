@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Float - 20231222</title>
+    <style>
+        img {
+            float: left;
+            margin: 10px;
+        }
+        p {
+            border: 1px solid red;
+        }
+
+        .box {
+            color: whitesmoke;
+            font-weight: bold;
+            font-size: 50px;
+
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            padding: 10px;
+        }
+        #box-1, #box-2 {
+            float: left;
+        }
+        #box-3, #box-4 {
+            float: right;
+        }
+        #box-1 {
+            background-color: maroon;
+        }
+        #box-2 {
+            background-color: orangered;
+        }
+        #box-3 {
+            background-color: black;
+        }
+        #box-4 {
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <h1>float</h1>
+
+    <h2>요소를 float 시키기</h2>
+    <div>
+        <img src="../html/images/sample.jpg" width="80px" height="115px">
+        <p>22일 폭설로 전면 운항이 중단된 제주국제공항 3층 출발 대합실에선 곳곳에서 큰 목소리가 터져나왔다.
+            고향으로 돌아가는 비행기표를 구하지 못한 관광객과 항공사 직원간 실랑이가 벌어진 것이다.
+            아내와 함께 제주에 관광 온 60대 초반 김모씨 부부는 "나흘간 관광하고 이제 서울로 돌아가려고 공항에 도착했는데 뒤늦게 항공기가 결항됐다는 통보를 받았다"며 "폭설과 같은 기상이변으로 인한 것이나 미리 공지만 해줬다면 이렇게 화가 나지 않았을 것"이라고 말했다.
+            그는 "숙소에서 체크아웃도 하고 렌터카도 반납하고 짐도 모두 갖고 나왔는데 어떻게 해야할 지 막막하다"고 한숨을 지었다.
+            한 저비용항공사(LCC) 카운터에는 비행기표를 사려는 사람들의 줄이 똬리를 틀듯 이어져 100m를 훌쩍 넘었다.
+            가족과 함께 제주에 왔다는 A씨는 "어제 청주로 돌아가려다가 가지 못했는데 오늘도 기약이 없다"고 속상해했다.
+            그는 "항공사를 바꿔 오늘 오전 9시 40분 비행기를 예약했는데 이런 상황"이라며 "항공사에서 결항 안내라도 친절하게 했으면 좋겠는데 아무런 안내도 조치도 없다"고 지적했다.
+            제주공항은 폭설에 따른 제설작업으로 인해 이날 오전 8시 20분부터 오후 3시까지 6시간 40분 동안 활주로 운영 중단 사태가 이어지고 있다.
+            항공기가 멈춰서면서 제주공항은 비행기를 타지 못한 승객들로 인산인해를 이루고 있다.
+            항공사 직원들은 "너무 송구스럽지만 기상악화로 인해 결항과 지연운항 등 비정상 운항이 발생해 죄송하다"며 연신 머리를 숙였다.
+        </p>
+    </div>
+
+    <h2>float로 요소를 정렬시키기</h2>
+    <div class="container">
+        <div class="box" id="box-1">1</div>
+        <div class="box" id="box-2">2</div>
+        <div class="box" id="box-3">3</div>
+        <div class="box" id="box-4">4</div>
+    </div>
+</body>
+</html>

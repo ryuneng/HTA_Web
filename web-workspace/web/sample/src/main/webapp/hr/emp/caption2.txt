@@ -1,0 +1,56 @@
+20231229
+
+< 페이징 처리 >
+
+		한 화면에 표시할 데이터 갯수를 결정한다.
+				int rows = 15
+		
+데이터 출력하기 (list.jsp)
+		클라이언트가 요청한 페이지번호를 조회한다.
+				int pageNo = Integer.valueOf(request.getParameter("page"));
+		
+		요청한 페이지에 맞는 조회범위를 계산한다.
+				int start = (pageNo - 1)*rows + 1;
+				int end = pageNo*rows;
+		
+		조회범위에 맞는 데이터를 조회한다.
+				EmployeeDao empDao = new EmployeeDao();
+				List<EmpListDto> dtoList = empDao.getEmployees(start, end);
+		
+		조회된 데이터를 화면에 출력한다.
+				for (Dto dto : dtoList {
+						<tr>
+								<td><%=dto.getId() %></td>
+								<td><%=dto.getFirstName() %></td>
+						</tr>
+				}
+		
+		
+
+페이지 내비게이션 링크 출력하기
+		한 화면에 표시할 페이지갯수를 결정한다.
+				final int PAGES = 5;
+				
+		전체 데이터 갯수를 조회한다.
+				int totalRows = dao.getTotalRows();
+		
+		총 페이지 갯수를 계산한다.
+				int totalPages = (int) Math.ceil((double)totalRows/rows);
+		
+		총 블록 갯수를 계산한다.
+				int totalBlocks = (int) Math.ceil((double)totalPages/PAGES);
+		
+		요청한 페이지번호가 포함된 블록번호를 계산한다.
+				int currentBlock = (int) Math.ceil((double)currentPage/PAGES);
+				
+		화면에 표시할 페이지범위를 계산한다.
+				int beginPage = (currentBlock - 1)*PAGES + 1;
+				int endPage = (currentBlock == totalBlocks ? totalPages : currentBlock*PAGES;
+		
+		계산된 페이지번호를 화면에 출력한다.
+				for (int num = beginPage; num <= endPage; num++) {
+						<a href="list.jsp?page=<%=num %>"><%=num %></a>
+				}
+		
+				
+		

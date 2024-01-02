@@ -1,0 +1,29 @@
+20240102
+
+회원가입 링크 클릭 시 요청
+	registerform.jsp
+		// 요청파라미터 fail을 조회한다.
+		String fail = request.getParameter("fail");
+		fail은 null이다.
+
+회원가입 오류로 인한 재요청
+	registerform.jsp?fail=id
+		// 요청파라미터 fail을 조회한다.
+		String fail = request.getParameter("fail");
+		fail은 "id"이다.
+
+registerform.jsp
+
+<%
+	String fail = request.getParameter("fail");
+%>
+
+<%
+	if ("ID".equals(fail)) {
+%>
+<div class="alert alert-danger">
+	<strong>회원가입 실패</strong> 아이디가 이미 사용중입니다.
+</div>
+<%
+	}
+%>

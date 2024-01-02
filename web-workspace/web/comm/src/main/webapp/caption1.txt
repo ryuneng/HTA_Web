@@ -1,0 +1,93 @@
+20240102
+
+ibatis, mybatis
+	- SQL Mapper framework
+	- SQL과 자바객체를 매핑시켜서 데이터베이스 액세스 작업을 수행한다.
+	    * SQL 실행에 필요한 값을 포함하고 있는 자바객체와
+	      SQL 실행결과 값을 저장하는 자바객체를 각각 지정하고 SQL과 연결하면
+	      ibatis 혹은 mybatis가 SQL을 실행해서 데이터베이스 액세스 작업을 수행한다.
+	      
+예시)
+	public class Dept {
+			int id, String name, int managerId, int locationId;
+	}
+	
+1) ibatis
+	<insert id="insertDepartment" parameterClass="vo.Dept">
+			insert into departments
+			(department_id, department_name, manager_id, location_id)
+			values
+			(#id#, #name#, #managerId#, #locationId#)
+	</insert>
+	
+	<insert> 태그
+			INSERT SQL 구문을 정의하는 태그
+	id="insertDepartment"
+			이 INSERT SQL 구문을 식별하는 ID값을 지정한다.
+	parameterClass="vo.Dept"
+			이 INSERT SQL 구문을 실행하는 데 필요한 값을 vo.Dept객체에 담아서 파라미터로 제공한다는 것을 지정한다.
+	#id#
+			파라미터로 전달받은 vo.dept객체의 id 멤버변수에 저장된 값이 치환될 위치를 지정한다.
+	#name#
+			파라미터로 전달받은 vo.dept객체의 name 멤버변수에 저장된 값이 치환될 위치를 지정한다.
+	실행하기
+			public void insertDepartment(Dept dept) {
+					ibatis.insert("insertDepartment", dept);
+			}
+			
+2) mybatis
+	<insert id="insertDepartment" parameterType="vo.Dept">
+			insert into departments
+			(department_id, department_name, manager_id, location_id)
+			values
+			(#{id}, #{name}, #{managaerId}, #{locationId})
+	</insert>
+	
+	<insert id="insertJob">
+			insert into jobs
+			(job_id, job_title, min_salary, max_salary)
+			values
+			(?,?,?,?)
+	</insert>
+	
+	
+--------------------------------------------------------------------------------------------
+ibatis의 주요 API
+	SqlMapClient 인터페이스
+		데이터베이스에 대한 CRUD 지원 메소드가 정의된 인터페이스
+		주요 메소드
+			Object insert(String sql)
+			Object insert(String sql, Object parameterClass)
+			* INSERT 구문을 실행하는 메소드
+			* <insert>태그 안에서 <selectKey> 태그를 사용하는 경우,
+			  selectKey태그에서 획득한 값이 반환된다.
+			
+			int update(String sql)
+			int update(String sql, Object parameterClass)
+			* UPDATE 구문을 실행하는 메소드
+			* 변경된 행의 갯수를 반환한다.(의미없음)
+			
+			int delete(String sql)
+			int delete(String sql, Object parameterClass)
+			* DELETE 구문을 실행하는 메소드
+			* 삭제된 행의 갯수를 반환한다.(의미없음)
+			
+			
+			Object queryForObject(String sql)
+			Object queryForObject(String sql, Object parameterClass)
+			* SELECT 구문을 실행하는 메소드
+			* 조회 결과가 1건인 경우 사용
+			* 기본키나 유니크 컬럼이 조회조건으로 사용되는 경우 조회결과는 1건,
+			  그 외의 경우에는 조회결과가 1건이더라도 사용하면 안된다.
+			* resultClass 속성에서 지정한 그 객체를 생성해서 조회결과를 저장한 다음 반환하며,
+			  조회결과가 없으면 null을 반환한다.
+			
+			List queryForList(String sql)
+			List queryForList(String sql, Object parameterClass)
+			* SELECT 구문을 실행하는 메소드
+			* 조회 결과가 1건 이상인 경우 사용
+			* 조회 결과의 유무와 상관없이 List객체를 생성한다.
+			  조회결과 하나당(행마다) resultClass 속성에서 지정한 그 객체를 생성해서
+			  조회결과를 저장한 다음 위에서 생성한 List객체에 저장한다.
+			  최종적으로, List객체가 반환된다. (List객체에서 resultClass속성에서 지정한 객체가 여러개 저장되어 있다.)
+			  조회결과가 하나도 없으면 사이즈가 0인 List객체가 반환된다.

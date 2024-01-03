@@ -11,9 +11,14 @@
 </head>
 <body>
 <%--
-	include 지시어는 다른 JSP페이지를 이 페이지에 포함시킨다.
+	<jsp:include page="포함시킬 JSP 경로" />
+		- JSP 액션태그
+		- 지정된 JSP 페이지를 이 JSP에 포함시킨다.
+		- <jsp:param />태그를 포함할 수 있다.
  --%>
-<%@ include file="include/navbar.jsp" %>
+<jsp:include page="include/navbar.jsp">
+	<jsp:param name="menu" value="home" />
+</jsp:include>
 	<div class="container">
 		<div class="row">
 			<div class="col-12 bg-light p-5">

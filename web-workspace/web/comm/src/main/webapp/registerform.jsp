@@ -10,7 +10,9 @@
 <title>커뮤니티 - 20240102</title>
 </head>
 <body>
-	<%@ include file="include/navbar.jsp" %>
+	<jsp:include page="include/navbar.jsp">
+		<jsp:param value="register" name="menu" />
+	</jsp:include>
 	<div class="container">
 		<div class="col-12">
 			<h1 class="mb-3">회원가입 폼</h1>

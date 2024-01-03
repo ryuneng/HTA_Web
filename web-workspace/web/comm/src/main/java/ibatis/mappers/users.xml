@@ -57,6 +57,7 @@
 		select
 			user_no           as no,
 			user_id           as id,
+			user_name         as name,
 			user_password     as password,
 			user_email        as email,
 			user_tel          as tel,
@@ -73,6 +74,7 @@
 		select
 			user_no           as no,
 			user_id           as id,
+			user_name         as name,
 			user_password     as password,
 			user_email        as email,
 			user_tel          as tel,

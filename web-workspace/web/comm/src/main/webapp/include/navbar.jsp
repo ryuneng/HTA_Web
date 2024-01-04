@@ -26,7 +26,7 @@
 	*/
 	LoginUser loginUser = (LoginUser) session.getAttribute("LOGIN_USER");
 %>
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark mb-3">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="/comm/index.jsp">샘플 커뮤니티</a>
 		<ul class="navbar-nav me-auto">

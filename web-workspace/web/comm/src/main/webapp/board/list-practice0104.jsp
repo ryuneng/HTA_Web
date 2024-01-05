@@ -16,7 +16,7 @@
 <meta name="viewport" content="width=device-width, initail-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
-<title>커뮤니티::게시글목록</title> <!-- 20240104 -->
+<title>연습 - 커뮤니티::게시글목록</title> <!-- 20240104 -->
 </head>
 <body>
 <jsp:include page="../include/navbar.jsp">
@@ -24,11 +24,11 @@
 </jsp:include>
 <div class="container">
 	<div class="col-12">
-		<h1>게시글 목록</h1>
+		<h1>연습 - 게시글 목록</h1>
 		
 <%
 	// HttpSession에 LOGIN_USER 속성명으로 저장된 로그인된 사용자정보 조회하기
-	LoginUser loginUser = (LoginUser) session.getAttribute("LOGIN_USER"); // -> login.jsp에 session.setAttribute("LOGIN_USER", loginUser) 으로 저장되어 있음
+	LoginUser loginUser = (LoginUser) session.getAttribute("LOGIN_USER");
 
 	/*
 		요청 URL
@@ -80,9 +80,9 @@
 	if (boardList.isEmpty()) {
 %>
 				<tr>
-					<td colspan="5" class="text-center">게시글이 없습니다.</td>
+					<td>게시글이 없습니다.</td>
 				</tr>
-<%		
+<%
 	} else {
 		for (Board board : boardList) {
 %>
@@ -115,17 +115,18 @@
 %>
 		<nav>
 			<ul class="pagination justify-content-center">
+			
 <%
 	if (isFirst) {
 %>
 				<li class="page-item disabled">
-					<a class="page-link" >이전</a>
+					<a class="page-link">이전</a>
 				</li>
 <%
 	} else {
 %>
 				<li class="page-item">
-					<a class="page-link" href="list.jsp?page=<%=currentPage - 1 %>">이전</a>
+					<a class="page-link" href="list-practice0104.jsp?page=<%=currentPage - 1 %>">이전</a>
 				</li>
 <%
 	}
@@ -134,7 +135,7 @@
 	for (int num = beginPage; num <= endPage; num++) {
 %>
 				<li class="page-item <%=currentPage == num ? "active" : "" %>">
-					<a class="page-link" href="list.jsp?page=<%=num %>"><%=num %></a>
+					<a class="page-link" href="list-practice0104.jsp?page=<%=num %>"><%=num %></a>
 				</li>
 <%
 	}
@@ -149,7 +150,7 @@
 	} else {
 %>
 				<li class="page-item">
-					<a class="page-link" href="list.jsp?page=<%=currentPage + 1 %>">다음</a>
+					<a class="page-link" href="list-practice0104.jsp?page=<%=currentPage + 1 %>">다음</a>
 				</li>
 <%
 	}
@@ -158,7 +159,6 @@
 		</nav>
 		
 		<div class="text-end">
-		
 <%
 	if (loginUser != null) {
 %>
@@ -166,8 +166,8 @@
 <%
 	} else {
 %>
-			<a class="btn btn-outline-primary disabled" aria-disabled="true">새 글</a>
-<%	
+			<a class="btn btn-outline-primary disabled">새 글</a>
+<%
 	}
 %>
 		</div>

@@ -4,7 +4,8 @@
    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"
    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
    
-<sqlMap>
+<!-- namespace : 이름 충돌 방지를 위한 이름 공간 분리  -->
+<sqlMap namespace="users">
 	<!-- 
 		id="insertUser"
 			이 SQL 구문의 식별자를 지정한다.

@@ -16,7 +16,7 @@ public class UserDao {
 	 * @param user 신규 사용자정보
 	 */
 	public void insertUser(User user) throws SQLException {
-		ibatis.insert("insertUser", user); // users.xml의 id와 parameterClass와 동일해야 함
+		ibatis.insert("users.insertUser", user); // users.xml의 id와 parameterClass와 동일해야 함
 	}
 	
 	/**
@@ -26,7 +26,7 @@ public class UserDao {
 	 * @throws SQLException
 	 */
 	public User getUserById(String id) throws SQLException {
-		User user = (User) ibatis.queryForObject("getUserById", id);
+		User user = (User) ibatis.queryForObject("users.getUserById", id);
 		return user;
 	}
 	
@@ -37,6 +37,6 @@ public class UserDao {
 	 * @throws SQLException
 	 */
 	public User getUserByEmail(String email) throws SQLException {
-		return (User) ibatis.queryForObject("getUserByEmail", email);
+		return (User) ibatis.queryForObject("users.getUserByEmail", email);
 	}
 }

@@ -24,10 +24,6 @@
 			
 <%
 	LoginUser loginUser = (LoginUser) session.getAttribute("LOGIN_USER");
-	if (loginUser == null) {
-		response.sendRedirect("../loginform.jsp?error=deny");
-		return;
-	}
 	/*
 		일정카테고리 표시하기
 			1. 모든 일정카테고리를 조회한다.

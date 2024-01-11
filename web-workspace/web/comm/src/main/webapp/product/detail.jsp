@@ -1,3 +1,4 @@
+<%@page import="utils.StringUtils"%>
 <%@page import="vo.Event"%>
 <%@page import="utils.DateUtils"%>
 <%@page import="java.util.List"%>
@@ -103,8 +104,7 @@
 					</tr>
 					<tr>
 						<th>상품설명</th>
-						<td><%=product.getDescription() %><td>
-						<td></td>
+						<td><%=StringUtils.withBr(product.getDescription()) %><td>
 						<td></td>
 					</tr>
 				</tbody>

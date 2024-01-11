@@ -56,6 +56,9 @@
 			<form class="border bg-light p-3" 
 				method="post" 
 				action="modify.jsp">
+				
+				<input type="hidden" name="no" value="<%=product.getNo() %>" />
+				
 				<div class="form-group mb-3">
 					<label class="form-label">카테고리</label>
 					<select class="form-select" name="catNo">

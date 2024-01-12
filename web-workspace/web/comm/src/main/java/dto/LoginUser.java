@@ -30,6 +30,12 @@ public class LoginUser {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	@Override
+	public String toString() {
+		return "LoginUser [no=" + no + ", id=" + id + ", name=" + name + "]";
+	}
+	
 	
 	
 }

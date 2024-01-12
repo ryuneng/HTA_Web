@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="https://jakarta.ee/xml/ns/jakartaee" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd" id="WebApp_ID" version="6.0">
-  
+
+
+	<!-- 
+		사용자 정의 리스너 배포하기
+	 -->
+	<listener>
+		<listener-class>web.listener.LoginUserAddListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>web.listener.LoginUserRemoveListener</listener-class>
+	</listener>
   
   <!-- LoginCheckFilter 배포하기 -->
   <filter>
   		<filter-name>logincheck</filter-name>
-  		<filter-class>web.LoginCheckFilter</filter-class>
-  		
-  		<!-- 
-  			<init-param>태그로 설정한 설정정보는
-  			LoginCheckFilter 객체 전용의 FilterConfig 객체에 등록된다.
-  		 -->
-  		 <!--
-  		 <init-param>
-  		 		<param-name>attrName</param-name>
-  		 		<param-value>LOGIN_USER</param-value>
-  		 </init-param>
-  		 -->
+  		<filter-class>web.filter.LoginCheckFilter</filter-class>
   </filter>
   <filter>
   		<filter-name>timecheck</filter-name>
-  		<filter-class>web.RunningTimeCheckFilter</filter-class>
+  		<filter-class>web.filter.RunningTimeCheckFilter</filter-class>
   </filter>
   
   <filter-mapping>

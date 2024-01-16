@@ -55,7 +55,10 @@
 		}
 	%>
 			
-			<form class="border bg-light p-3" method="post" action="register.jsp">
+			<form class="border bg-light p-3"
+			      method="post"
+			      action="register.jsp"
+			      onsubmit="checkRegisterForm(event)">
 				<div class="form-group mb-3">
 					<label class="form-label">아이디</label>
 					<input type="text" class="form-control" name="id"/>
@@ -83,5 +86,67 @@
 			</form>
 		</div>
 	</div>
+<script type="text/javascript"> /* 20240116 */
+/* 
+	회원가입 폼 입력값 유효성 체크하기
+		1. 아이디, 비밀번호, 이름, 이메일, 전화번호는 필수 입력값이다.
+		2. 아이디 : 6글자 이상, 영어대소문자/숫자 조합
+		3. 비밀번호 : 9글자 이상, 영어대소문자/숫자/특수문자 조합
+		4. 이름 : 2글자 이상, 한글
+		5. 이메일 : 이메일형식에 맞는 문자열
+		6. 전화번호 : 전화번호형식에 맞는 문자열
+ */
+	function checkRegisterForm(event) {
+		// 0. 정규표현식 작성하기
+		
+		// 아이디 정규표현식 - 영어대소문자+숫자 조합의 6글자 이상
+		let idRegExp = /^[a-zA-Z0-9]{6,}$/;
+		
+		// 1. 입력필드 엘리먼트 조회하기
+		let idInput = document.querySelector("input[name=id]");
+		let passwordInput = document.querySelector("input[name=password]");
+		let nameInput = document.querySelector("input[name=name]");
+		let emailInput = document.querySelector("input[name=email]");
+		let telInput = document.querySelector("input[name=tel]");
+		
+		// 2. 입력필드의 입력값 조회하기
+		let id = idInput.value;
+		let password = passwordInput.value;
+		let name = nameInput.value;
+		let email = emailInput.value;
+		let tel = telInput.value;
+		
+		// 3. 입력값 검증
+		// 아이디 검증 - 필수입력값 검증
+		if (id === "") {
+			event.preventDefault();
+			alert("아이디는 필수입력값입니다.");
+			idInput.focus();
+			
+			return;
+		}
+		// 아이디 검증 - 6글자 이상, 영어대소문자/숫자 조합
+		if (!idRegExp.test(id)) {
+			event.preventDefault();
+			alert("아이디는 영어대소문자 + 숫자조합, 6글자 이상이어야 합니다.")
+			idInput.focus();
+			
+			return;
+		}
+		
+		// 비밀번호 검증
+		
+		
+		// 이름 검증
+		
+		
+		// 이메일 검증
+		
+		
+		// 전화번호 검증
+		
+		
+	}
+</script>
 </body>
 </html>

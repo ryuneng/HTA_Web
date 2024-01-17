@@ -1,0 +1,81 @@
+20240111
+
+필터 배포하기
+1. @WebFilter 어노테이션 (순서 지정 불가, new 방식)
+
+	// 필터 클래스 정의와 필터 배포를 클래스에서 한번에 정의한다.
+	@WebFilter(
+		urlPatterns = "/*",
+		initParams = @WebInitParam(name = "attributeName", value = "LOGIN_USER")
+	)
+	public class LoginCheckFilter implements Filter {
+	
+	}
+
+2. web-app/WEB-INF/web.xml 설정파일 (순서 지정 가능, old 방식)
+
+	// 필터 클래스 정의하기
+	public class LoginCheckFilter implements Filter {
+	
+	}
+	
+	// web.xml에서 필터 클래스 배포하기
+	<filter>
+		<filter-name>logincheck</filter-name>
+		<filter-class>web.LoginCheckFilter</filter-class>
+		<init-param>
+			<param-name>attributeName</param-name>
+			<param-value>LOGIN_USER</param-value>
+		</init-param>
+	</filter>
+	<Filter-mapping>
+		<filter-name>logincheck</filter-name>
+		<url-pattern>/*</url-pattern>
+	</Filter-mapping>
+	
+	
+	
+-----------------------------------------------------------------------------------------
+URI와 URL
+
+URI (Uniform Resource Identifier, 통합 자원 식별자)
+	인터넷에 있는 자원을 나타내는 유일한 주소(식별자)다.
+	
+	아래의 주소는 URI다.
+	이 주소는 web.DownloadServlet 자원의 실행을 요청하는 유일한 식별자 주소다.
+	이 주소는 web.DownloadServlet 자원의 실제 위치를 나타내지 않는다.
+	http://localhost/comm/file/download
+	
+URL (Uniform Resource Locator, 통합 자원 지시기)
+	네트워크 상에서 자원이 어디 있는지를 알려주기 위한 규약이다.
+	URL은 실제 존재하는 자원의 물리적인 위치를 나타낸다.
+
+	아래의 주소는 URL다.
+	이 주소는 index.jsp 자원의 실행을 요청하는 유일한 식별자 주소다.
+	http://localhost/comm/index.sjp
+	
+	아래의 주소는 URL이다.
+	이 주소는 index.jsp 자원의 서버상의 실제 위치를 나타낸다.
+	http://localhost/comm/index.sjp
+
+
+
+URI와 URL의 구조
+	주소는 scheme, hosts, url-path로 구성된다.
+	
+	http://www.shop.com:80/product/detail.jsp?no=10000&page=3
+	
+	scheme       -> http://
+	hosts        -> www.shop.com:80
+	url-path     -> /product/detail.jsp
+	query-string -> no=10000&page=3
+
+
+	http://www.shop.com:80/product/detail.jsp?no=10000&page=3 ---> URI (URL은 아님)
+	* ?no=10000&page=3 이 자원의 위치를 나타내는 정보가 아니기 때문이다.
+	* no는 상품번호가 10000이고, 페이지번호 3인 정보를 요청한다는 것을 식별하는 용도로 사용되기 때문이다.
+
+	http://www.shop.com:80/product/detail.jsp ---> URI, URL
+	* URL은 URI의 부분집합이기 때문에 URL은 전부 URI다.
+	* 위의 주소는 detail.jsp 자원에 대한 유일한 식별자이기도 하다.
+

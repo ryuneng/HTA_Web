@@ -1,0 +1,100 @@
+20240118
+
+JSON(JavaScript Object Notation)
+	- 경량의 데이터-교환 형식
+	- 사람이 읽고 쓰기 쉽고, 기계가 분석하고 생성하기 쉽다.
+	- 언어 독립적이다.
+	
+	
+	
+JSON의 구조
+	1. JSON Object 구조
+		- name/value 형태의 쌍으로 데이터를 표현한다.(dictionary, map, object 등과 유사한 형태)
+		- name/value 쌍들의 비순서화된 집합
+		  {name:value, name:value, name:value}
+		- name은 string 타입이다.
+		- value는 string, number, object, array, true/false, null이 가능하다.
+		
+	2. JSON Array 구조
+		- value의 순서화된 리스트로 데이터를 표현한다.(array, vector, list 등과 유사한 형태)
+		  [value, value, value, value]
+		- value는 string, number, object, array, true/false, null이 가능하다.
+	
+	
+		
+JSON의 데이터 타입
+	1. string
+		- 쌍따옴표 안에 둘러싸인 유니코드 문자들의 조합(홑따옴표 허용x)
+		- 예시)
+			""
+			"a"
+			"가"
+			"\\", "\b", "\f", "\n", "\r", "\t"
+			"\uAC00"
+			
+	2. number
+		- 8진수, 16진수를 사용하지 않으며, C와 Java의 숫자와 비슷하다.
+		- 예시)
+			0
+			123
+			3.14
+			-100
+			1.234E2
+	
+	
+	
+JSON 데이터 작성 예시
+	1. JSON Object 예시
+		- 도서정보
+			{"no":1234, "title":"자바의 정석", "author":"남궁성", "price":35000, "soldOut":false}
+			
+		- 고객정보
+			{"no":1000, "name":"홍길동", "car":{"name":"제네시스", "maker":"현대자동차", "year":2023}}
+			
+		- 부서정보
+			{"id":1000, "name":"기술팀", "member":["홍길동", "김유신", "류관순", "강감찬"]}
+			
+	
+	2. JSON Array 예시
+		- 부서목록
+			["영업부", "기술부", "관리부", "총무부"]
+		
+		- 부서목록
+			[{"id":1000, "name":"기술부"}, {"id":2000, "name":"영업부"}, {"id":3000, "name":"총무부"}]
+			
+			
+			
+자바스크립트의 JSON 지원 API
+	- 자바스크립트는 JSON 내장객체를 제공한다.
+	- 주요 API
+		1) JSON.parse(json형식의텍스트)
+			- json형식의 텍스트를 자바스크립트 객체 혹은 자바스크립트 배열로 변환해서 반환한다.
+			- json형식의 텍스트가 json object 구조라면 자바스크립트 객체로 변환된다.
+			- json형식의 텍스트가 json array 구조라면 자바스크립트 배열로 변환된다.
+		
+		2) JSON.stringify(자바스크립트객체)
+			- 자바스크립트 객체를 json object 구조의 텍스트로 변환한다.
+			
+		3) JSON.stringify(자바스크립트배열)
+			- 자바스크립트 배열을 json array 구조의 텍스트로 변환한다.
+	
+	
+	
+------------------------------------------------------------------------------
+자바스크립트의 객체 리터럴 - 객체
+	let obj = {no:100, name:"홍길동"};
+	
+	let obj = {'no':100, 'name':"홍길동"};
+	
+	let obj = {"no":100, "name":"홍길동"};
+
+	
+JSON Object 데이터 - 텍스트
+	let text = '{"no":100, "name":"홍길동"}'  <------- 올바른 JSON 표현식
+	
+	let text = '{no:100, name:"홍길동"}'		<--- 올바른 JSON 표현식이 아니다.
+	
+	let text = '{'no':100, 'name':"홍길동"}'  <--- 올바른 JSON 표현식이 아니다.
+	
+	let text = '{"no":100, "name":'홍길동'}'  <--- 올바른 JSON 표현식이 아니다.
+	

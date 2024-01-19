@@ -1,0 +1,210 @@
+20240119
+
+검색과 페이징처리
+
+JSP
+	1. 검색폼을 정의한다.
+		<form id="form-search" method="GET" action="list.jsp">
+			<select name="opt">
+			
+			</select>
+			<input type="text" name="keyword" />
+			<button type="button">검색</button>
+		</form>
+		
+	2. 검색폼에 히든 필드를 추가한다.
+		검색에 영향을 미치는 값 - 페이지번호, 검색옵션, 검색어, 출력개수, 정렬방식
+		검색에 영향을 미치는 모든 값은 검색폼에 포함시킨다.
+		즉, 본 예제에서는 페이지번호, 출력개수, 정렬방식을 히든 필드로 추가한다.
+
+		<form id="form-search" method="GET" action="list.jsp">
+			<input type="hidden" name="page">
+			<input type="hidden" name="rows">
+			<input type="hidden" name="sort">
+			<select name="opt">
+			
+			</select>
+			<input type="text" name="keyword" />
+			<button type="button">검색</button>
+		</form>
+
+	3. 게시글 목록을 요청하는 모든 상호작용에 검색폼의 폼 입력값이 서버에 제출되도록 한다.
+		- 출력개수를 변경한다.
+		- 정렬방식을 변경한다.
+		- 페이지번호를 클릭한다.
+		- 검색조건과 검색어를 입력하고 검색버튼을 클릭한다.
+		- 위의 모든 상호작용에 자바스크립트 함수가 실행되게 한다.
+		- 자바스크립트 함수 내에서는 필요한 작업을 수행하고, 폼 입력값을 서버로 제출시킨다.
+		
+		<select name="rows" onchange="changeRows()">
+			<option value="10">10개씩</option>
+			<option value="20">20개씩</option>
+			<option value="30">30개씩</option>
+		</select>
+		
+		<input type="radio" name="sort" value="date" onchange="changeSort()">최신날짜순
+		<input type="radio" name="sort" value="title" onchange="changeSort()">제목순
+		
+		<a href="" onclick="goPage(1, event)">1</a>
+		<a href="" onclick="goPage(2, event)">2</a>
+		<a href="" onclick="goPage(3, event)">3</a>
+		
+		<form id="form-search" method="GET" action="list.jsp">
+			<input type="hidden" name="page">
+			<select name="opt">
+			
+			</select>
+			<input type="text" name="keyword" />
+			<button type="button" onclick="searchKeyword()">검색</button>
+		</form>
+		
+		// 출력개수를 변경한다.
+		// 출력개수를 조회한다. 출력개수를 히든필드에 설정한다.
+		// 조회할 페이지는 1페이지로 설정한다.
+		function changeRows() {
+			let rows = document.querySelector("select[name=rows]").value;
+			document.querySelector("#form-search input[name=rows]").value = rows;
+			document.querySelector("#form-search input[name=page]").value = 1;
+
+			submitForm();
+		}
+		
+		// 정렬방식을 변경한다.
+		// 체크된 정렬방식을 조회한다. 정렬방식을 히든필드에 설정한다.
+		// 조회할 페이지는 1페이지로 설정한다.
+		function changeSort() {
+			let sort = document.querySelector("input[name=sort]:checked").value;
+			document.querySelector("#form-search input[name=sort]").value = sort;
+			document.querySelector("#form-search input[name=page]").value = 1;
+		
+			submitForm();
+		}
+		
+		// 페이지번호를 클릭한다.
+		// 매개변수로 페이지번호를 전달받는다. 전달받은 페이지번호를 히든필드에 설정한다.
+		function goPage(page, event) {
+			event.preventDefault();
+			document.querySelector("input[name=page]").value = page;
+			
+			submitForm();
+		}
+		
+		function searchKeyword() {
+			document.querySelector("input[name=page]").value = 1;
+			
+			submitForm();
+		}
+		
+		function submitForm() {
+			document.getElementById("form-search").submit();
+		}
+		
+	4. 게시글 조회하기
+		- 요청파라미터 조회하기
+		  int page = NumberUtils.toInt(request.getParameter("page"), 1);
+		  int rows = NumberUtils.toInt(request.getParameter("page"), 10);
+		  String sort = StringUtils.toString(request.getParameter("sort"), "date");
+		  String opt = StringUtils.toString(request.getParameter("opt"));
+		  String keyword = StringUtils.toString(request.getParameter("opt"));
+		  
+		- 요청파라미터를 Map객체에 저장하기
+		  Map<String, Object> param = new HashMap<>();
+		  param.put("rows", rows);
+		  param.put("sort", sort);
+		  param.put("opt", opt);
+		  param.put("keyword", keyword);
+		  
+		- 검색옵션에 맞는 행의 총 개수 조회하기
+		  int totalRows = boardDao.getTotalRows(param);
+		  
+		- 페이징처리에 필요한 정보를 제공하는 Pagination 객체 생성하기
+		  Pagination pagination = new Pagination(page, totalRows, rows);
+		  
+		- 게시글 조회범위 획득하기
+		  int begin = pagination.getBegin();
+		  int end = pagination.getEnd();
+		  
+		- Map 객체에 조회범위값 담기
+		  param.put("begin", begin);
+		  param.put("end", end);
+		  
+		- 검색옵션 및 조회범위에 맞는 게시글 조회하기
+		  List<Board> boardList = boardDao.getBoards(param);
+		  
+
+
+XML
+	1. 검색조건에 맞는 게시글 갯수 조회하기
+
+		<select id="getTotalRows" parameterClass="map" resultClass="int">
+			select 
+				count(*)
+			from 
+				comm_boards
+			where 
+				board_deleted = 'N'	
+				<isEqual property="opt" compareValue="title">
+					and board_title like '%' || #keyword# || '%'
+				</isEqual>
+				<isEqual property="opt" compareValue="writer">
+					and user_no in (select user_no
+				                	      from comm_users
+				                	      where user_name = #keyword#)
+				</isEqual>
+				<isEqual property="opt" compareValue="content">
+					and board_content like '%' || #keyword# || '%'
+				</isEqual>
+		</select>
+
+	2. 검색조건, 검색범위에 맞는 게시글 조회하기
+		<select id="getBoards" parameterClass="map" resultClass="vo.Board">
+			select
+				A.board_no			as no,
+		       		A.board_title		as title,
+		       		A.user_no			as "user.no",
+		       		B.user_name			as "user.name",	
+		       		A.board_reply_cnt	as replyCnt,
+		       		A.board_created_date as createdDate
+			from (select 
+					<isEqual property="sort" compareValue="date">
+						row_number() over (order by board_no desc) num,
+					</isEqual>
+					<isEqual property="sort" compareValue="title">
+						row_number() over (order by board_title asc) num,
+					</isEqual>
+		             		board_no, 
+		             		board_title, 
+		             		user_no, 
+		             		board_reply_cnt,
+		             		board_created_date
+		      		from
+		            		comm_boards
+		      		where
+		            		board_deleted = 'N'
+		      			<isEqual property="opt" compareValue="title">
+						and board_title like '%' || #keyword# || '%'
+					</isEqual>
+					<isEqual property="opt" compareValue="writer">
+						and user_no in (select user_no
+						                from comm_users
+						                where user_name = #keyword#)
+					</isEqual>
+					<isEqual property="opt" compareValue="content">
+						and board_content like '%' || #keyword# || '%'
+					</isEqual>      
+		      		) A, comm_users B
+			where 
+				A.num between #begin# and #end#
+				and A.user_no = B.user_no
+	</select>
+
+
+
+DAO
+	pulic int getTotalRows(Map<String, Object> param) throws SQLException {
+		return (Integer) ibatis.queryForObject("hr.getTotalRows", param);
+	}
+	
+	public List<Board> getBoards(Map<String, Object> param) throws SQLException {
+		return (List<Board>) ibatis.queryForLis("hr.getBoards", param);
+	}

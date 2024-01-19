@@ -1,0 +1,72 @@
+20240119
+
+ibatis의 Dynamic SQL 지원 (외울 필요x)
+	
+1. 바이너리 조건 태그
+	<isEqual property="" compareValue="">
+	<isNotEqual property="" compareValue="">
+	<isGreaterThan property="" compareValue="">
+	<isGreaterEqual property="" compareValue="">
+	<isLessThan property="" compareValue="">
+	<isLessEqual property="" compareValue="">
+	
+	1) property
+		- 필수속성
+		- SQL 실행에 필요한 값을 가지고 있는 객체 변수명 혹은 Map객체의 key값
+	2) compareValue
+		- 필수속성
+		- 위의 property이름으로 찾은 값과 비교할 상수값
+	3) prepend
+		- 옵션속성
+		- 동적으로 추가되는 SQL의 앞에 자유롭게 추가할 키워드
+	
+2. 단일 조건 태그
+	<isNull property="">
+	<isNotNull property="">
+	<isEmpty property="">
+	<isNotEmpty property="">
+	
+	1) property
+		- 필수속성
+		- SQL 실행에 필요한 값을 가지고 있는 객체 변수명 혹은 Map객체의 key값
+	2) prepend
+		- 옵션속성
+		- 동적으로 추가되는 SQL의 앞에 자유롭게 추가할 키워드
+	
+3. 반복 조건 태그
+	<iterate property="" open="(" close=")" conjunction=",">
+	
+	1) property
+		- 필수속성
+		- SQL 실행에 필요한 값을 가지고 있는 객체 변수명 혹은 Map객체의 key값
+	2) open
+		- 옵션속성
+		- 동적으로 추가되는 SQL문의 앞부분에 추가되는 문자열, 여는 괄호가 주로 사용된다.
+	3) close
+		- 옵션속성
+		- 동적으로 추가되는 SQL문의 앞부분에 추가되는 문자열, 닫는 괄호가 주로 사용된다.
+	4) conjunction
+		- 옵션속성
+		- 동적으로 추가되는 각 값을 구분하는 문자열, and or , 가 주로 사용된다.
+	5) prepend
+		- 옵션속성
+		- 동적으로 추가되는 SQL의 앞에 자유롭게 추가할 키워드
+	
+	
+	
+	
+	
+// 제목이 "연습"인 게시글 수 조회 / 작성자가 "홍길동"인 게시글 수 조회
+select count(*)
+from comm_boards
+<isEqual property="opt" compareValue="title">	// if문 같은 기능(opt가 title일 때 내부작업 실행)
+	where board_title like '%' || '연습' || '%'
+</isEqual>
+<isEqual property="opt" compareValue="writer">	// if문 같은 기능(opt가 writer일 때 내부작업 실행)
+	where user_no in (select user_no
+				  from comm_users
+				  where user_name = '홍길동')
+</isEqual>
+
+* like '%자바%' : 제목에 "자바"가 포함되어 있는 모든 책
+* || : 여러 문자열을 연결하는 함수
